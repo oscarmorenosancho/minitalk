@@ -1,8 +1,11 @@
 .DS_Store
 .vscode/
-server
-client
 *.d
 *.o
 *.a
 bonus
+minitalk
+server
+client
+client_bonus
+server_bonus
