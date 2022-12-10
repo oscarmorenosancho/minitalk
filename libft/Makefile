@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/04 11:10:43 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/10 11:36:14 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/10 12:02:50 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,11 +140,11 @@ clean :
 	$(RM) $(DEPSB)
 	$(RM) $(DEPSGNL)
 	$(RM) $(DEPSX)
-	$(RM) *.d
 
 fclean : clean
 	$(RM) $(NAME)
 	$(RM) bonus
+	$(RM) *.d
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/10 10:53:27 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/10 12:10:08 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	main(int argc, char const *argv[])
 {
-	int	pid;
-
 	ft_check_server_args(argc, argv);
-	pid = getpid();
+	ft_show_pid();
 	return (0);
 }

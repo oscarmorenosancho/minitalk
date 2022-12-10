@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_bonus.c                                     :+:      :+:    :+:   */
+/*   ft_show_pid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/10 12:12:43 by omoreno-         ###   ########.fr       */
+/*   Created: 2022/12/10 12:07:21 by omoreno-          #+#    #+#             */
+/*   Updated: 2022/12/10 12:14:41 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
+#include "minitalk_utils.h"
 
-int	main(int argc, char const *argv[])
+void	ft_show_pid(void)
 {
-	ft_check_server_args(argc, argv);
-	ft_show_pid();
-	return (0);
+	int	pid;
+
+	pid = getpid();
+	ft_putstr_fd("Server process PID: ", 1);
+	ft_putnbr_fd(pid, 1);
+	ft_putstr_fd("\n", 1);
 }
