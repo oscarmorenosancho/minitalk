@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/12 11:49:14 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:34:48 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char const *argv[])
 	ft_get_client_args(argc, argv, &args);
 	i = 0;
 	while (args.msg_to_send[i])
-		ft_send_byte_to_pid(args.server_pid, args.msg_to_send[i++], 10);
+		ft_send_byte_to_pid(args.server_pid, args.msg_to_send[i++], 1000);
 	free_x((void **)&args.msg_to_send);
 	return (0);
 }

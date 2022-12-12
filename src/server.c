@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/12 17:14:44 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:59:32 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 	t_list			*client_node;
 	t_client_data	*client_data;
 	int				res;
-
 	(void)ptr;
 	client_node = ft_lstfindfirst(lst_clients, &ft_node_is_pid, &info->si_pid);
 	if (! client_node)
@@ -76,10 +75,15 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 int	main(int argc, char const *argv[])
 {
 	struct sigaction	nsa;
+	sigset_t			set;
 	struct sigaction	osa[3];
 	int					ret[3];
 
+	sigemptyset(&set);
+	sigaddset(&set, SIGUSR1);
+	sigaddset(&set, SIGUSR2);
 	nsa.sa_flags = SA_SIGINFO;
+	nsa.sa_mask = set;
 	nsa.sa_sigaction = ft_sig_handler;
 	ft_check_server_args(argc, argv);
 	ft_show_pid();
