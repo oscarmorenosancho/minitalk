@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/12 13:02:50 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:51:18 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 {
-	static char	byte;
-	static int	count;
-	int			res;
+	static t_list	*g_lst;
+	static char		byte;
+	static int		count;
+	static int		exitcount;
+	int				res;
 
 	(void)ptr;
 	(void)info;
+	(void)g_lst;
 	if (sig == SIGUSR2)
 		res = ft_append_bit_to_byte(1, &byte, &count);
 	else
@@ -30,14 +33,20 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 		//ft_putnbr_fd(info->si_pid, 1);
 		//ft_putchar_fd(')', 1);
 		ft_putchar_fd(byte, 1);
+		if (exitcount == 2 && byte == '\\')
+			exit (0);
+		if (exitcount < 2 && byte == '\\')
+			exitcount++;
+		else
+			exitcount=0;
 	}
 }
 
 int	main(int argc, char const *argv[])
 {
 	struct sigaction	nsa;
-	struct sigaction	osa[2];
-	int					ret[2];
+	struct sigaction	osa[3];
+	int					ret[3];
 
 	nsa.sa_flags = SA_SIGINFO;
 	nsa.sa_sigaction = ft_sig_handler;
