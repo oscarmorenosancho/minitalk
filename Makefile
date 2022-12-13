@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/13 11:53:37 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/13 19:20:35 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCU_R :=check_args.c\
 	ft_take_bit_from_byte.c\
 	sig_event_queue.c\
 	clients_list.c\
-	ft_process_sig_ev.c
+	ft_process_sig_ev.c\
+	flow_control.c
 
 SRC_PATH := src/
 SRCB_PATH := src_bonus/

@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 17:49:36 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:50:55 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 {
 	t_sig_event	se;
+	int			used;
 
 	(void)ptr;
 	se.pid = info->si_pid;
 	se.sig = sig;
 	if (! ft_push_se(se))
 		ft_log_error("Queue is full\n");
-	kill(info->si_pid, sig);
+	ft_is_full_se_queue(&used);
+	if (used > QUEUE_SIZE / 2)
+		kill(info->si_pid, SIGUSR2);
+	else
+		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(int argc, char const *argv[])

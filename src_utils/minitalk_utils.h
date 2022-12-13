@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 16:10:54 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 19:35:45 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,27 @@ typedef struct s_sig_event_queue
 	t_sig_event	ar[QUEUE_SIZE];
 }	t_sig_event_queue;
 
+
+typedef struct s_feedback
+{
+	int	pending;
+	int	queue_hi;
+}	t_feedback;
+
 void	ft_check_server_args(int argc, char const *argv[]);
 void	ft_get_client_args(int argc, char const *argv[], t_client_args *args);
 void	ft_show_pid(void);
 int		ft_append_bit_to_byte(int bit, char *byte, int *count);
 int		ft_take_bit_from_byte(char byte, int *bit, int *count);
 void	ft_init_se_queue(void);
-int		ft_is_full_se_queue(void);
+int		ft_is_full_se_queue(int *used);
 int		ft_is_empty_se_queue(void);
+void	ft_init_se_queue(void);
+int		ft_get_feedback_pending(void);
+int		ft_get_queue_hi(void);
+void	ft_set_feedback_pending(int val);
+void	ft_dec_feedback_pending(void);
+void	ft_set_queue_hi(int value);
 int		ft_push_se(t_sig_event se);
 int		ft_pop_se(t_sig_event *se);
 int		ft_content_is_pid(unsigned int i, void *content, void *arg);
