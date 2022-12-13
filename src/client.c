@@ -6,13 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 13:54:55 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:30:24 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include <errno.h>
-#define	INTERVAL_US	1000
+#define INTERVAL_US	200
 
 static void	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 {
