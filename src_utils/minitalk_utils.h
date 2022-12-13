@@ -6,13 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 13:45:24 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:10:54 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_UTILS_H
 # define MINITALK_UTILS_H
-# define QUEUE_SIZE	3200
+# define QUEUE_SIZE	800
 
 # include "../libft/libft.h"
 

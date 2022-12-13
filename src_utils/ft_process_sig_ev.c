@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:33:51 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 13:49:45 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:36:51 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_process_sig_ev(void)
 		if (ft_update_exit_state(client_data))
 		{
 			ft_lstclear(&lst_clients, &free);
+			ft_putstr_fd("Received close command\nServer exiting\n", 1);
 			exit (0);
 		}
 	}
