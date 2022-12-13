@@ -6,13 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 11:54:16 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:45:24 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_UTILS_H
 # define MINITALK_UTILS_H
-# define QUEUE_SIZE	800
+# define QUEUE_SIZE	3200
 
 # include "../libft/libft.h"
 
@@ -55,8 +55,9 @@ int		ft_is_full_se_queue(void);
 int		ft_is_empty_se_queue(void);
 int		ft_push_se(t_sig_event se);
 int		ft_pop_se(t_sig_event *se);
-int		ft_node_is_pid(unsigned int i, void *content, void *arg);
+int		ft_content_is_pid(unsigned int i, void *content, void *arg);
 t_list	*ft_create_node_for_pid(t_list	**lst_clients, pid_t pid);
+void	ft_clean_pid(t_list **lst, t_list *node, char byte);
 void	ft_process_sig_ev(void);
 
 #endif

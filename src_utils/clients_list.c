@@ -6,13 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:26:18 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 11:30:32 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:44:41 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_utils.h"
 
-int	ft_node_is_pid(unsigned int i, void *content, void *arg)
+int	ft_content_is_pid(unsigned int i, void *content, void *arg)
 {
 	t_client_data	*cd;
 	pid_t			pid;
@@ -20,6 +20,17 @@ int	ft_node_is_pid(unsigned int i, void *content, void *arg)
 	(void)i;
 	pid = *(pid_t *)arg;
 	cd = (t_client_data *)content;
+	return (cd->pid == pid);
+}
+
+int	ft_node_is_pid(unsigned int i, t_list *node, void *arg)
+{
+	t_client_data	*cd;
+	pid_t			pid;
+
+	(void)i;
+	pid = *(pid_t *)arg;
+	cd = (t_client_data *)node->content;
 	return (cd->pid == pid);
 }
 
@@ -40,4 +51,10 @@ t_list	*ft_create_node_for_pid(t_list	**lst_clients, pid_t pid)
 	cd->pid = pid;
 	ft_lstadd_front(lst_clients, node);
 	return (node);
+}
+
+void	ft_clean_pid(t_list **lst, t_list *node, char byte)
+{
+	if (! byte)
+		ft_lstdeletewhere(lst, &ft_node_is_pid, &free, (void *)node);
 }
