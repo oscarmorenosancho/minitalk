@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/10 13:38:02 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/13 11:53:37 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,10 @@ SRCSB_R := server_bonus.c
 SRCU_R :=check_args.c\
 	ft_show_pid.c\
 	ft_append_bit_to_byte.c\
-	ft_take_bit_from_byte.c
+	ft_take_bit_from_byte.c\
+	sig_event_queue.c\
+	clients_list.c\
+	ft_process_sig_ev.c
 
 SRC_PATH := src/
 SRCB_PATH := src_bonus/
