@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:33:51 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 15:36:51 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:24:05 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_process_sig_ev(void)
 	t_sig_event		se;
 	int				res;
 
-	if (! ft_pop_se(&se))
+	if (ft_is_empty_se_queue() || ! ft_pop_se(&se))
 		return ;
 	client_node = ft_lstfindfirst(lst_clients, &ft_content_is_pid, &se.pid);
 	if (! client_node)
