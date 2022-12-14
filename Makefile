@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/14 18:56:14 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/14 19:47:02 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,8 @@ DEPSS := $(SRCS:.c=.d)
 DEPSCB := $(SRCCB:.c=.d)
 DEPSSB := $(SRCSB:.c=.d)
 DEPSU := $(SRCU:.c=.d)
-DEPSU := $(SRCSU:.c=.d)
-DEPSU := $(SRCCU:.c=.d)
+DEPSSU := $(SRCSU:.c=.d)
+DEPSCU := $(SRCCU:.c=.d)
 
 CC	:= 	gcc
 CFLAGS := -Wall -Werror -Wextra
