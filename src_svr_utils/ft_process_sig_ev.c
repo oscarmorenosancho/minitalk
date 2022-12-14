@@ -6,11 +6,12 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:33:51 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 12:23:38 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:53:19 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_utils.h"
+#include "minitalk_svr_utils.h"
+#include "../src_utils/minitalk_utils.h"
 
 static int	ft_update_exit_state(t_client_data	*client_data)
 {
@@ -22,18 +23,6 @@ static int	ft_update_exit_state(t_client_data	*client_data)
 		client_data->exitcount = 0;
 	return (0);
 }
-
-/*static void	ft_print_received(t_client_data *client_data)
-{
-	if (client_data->byte)
-		ft_putchar_fd(client_data->byte, 1);
-	else
-	{
-		ft_putstr_fd("\nMessage over for client pid: ", 1);
-		ft_putnbr_fd(client_data->pid, 1);
-		ft_putstr_fd("\n", 1);
-	}
-}*/
 
 static void	ft_update_received(t_client_data *client_data)
 {

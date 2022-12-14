@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/13 19:20:35 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/14 18:56:14 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,19 @@ SRCSB_R := server_bonus.c
 SRCU_R :=check_args.c\
 	ft_show_pid.c\
 	ft_append_bit_to_byte.c\
-	ft_take_bit_from_byte.c\
+	ft_take_bit_from_byte.c
+
+SRCSU_R := ft_process_sig_ev.c\
 	sig_event_queue.c\
-	clients_list.c\
-	ft_process_sig_ev.c\
-	flow_control.c
+	clients_list.c
+ 
+SRCCU_R := flow_control.c
 
 SRC_PATH := src/
 SRCB_PATH := src_bonus/
 SRCU_PATH := src_utils/
+SRCCU_PATH := src_cli_utils/
+SRCSU_PATH := src_svr_utils/
 LIBFT_PATH := libft/
 
 SRCC := ${addprefix $(SRC_PATH), $(SRCC_R)}
@@ -43,18 +47,24 @@ SRCCB := ${addprefix $(SRCB_PATH), $(SRCCB_R)}
 SRCSB := ${addprefix $(SRCB_PATH), $(SRCSB_R)}
 
 SRCU := ${addprefix $(SRCU_PATH), $(SRCU_R)}
+SRCCU := ${addprefix $(SRCCU_PATH), $(SRCCU_R)}
+SRCSU := ${addprefix $(SRCSU_PATH), $(SRCSU_R)}
 
 OBJC := $(SRCC:.c=.o)
 OBJS := $(SRCS:.c=.o)
 OBJCB := $(SRCCB:.c=.o)
 OBJSB := $(SRCSB:.c=.o)
 OBJU := $(SRCU:.c=.o)
+OBJSU := $(SRCSU:.c=.o)
+OBJCU := $(SRCCU:.c=.o)
 
 DEPSC := $(SRCC:.c=.d)
 DEPSS := $(SRCS:.c=.d)
 DEPSCB := $(SRCCB:.c=.d)
 DEPSSB := $(SRCSB:.c=.d)
 DEPSU := $(SRCU:.c=.d)
+DEPSU := $(SRCSU:.c=.d)
+DEPSU := $(SRCCU:.c=.d)
 
 CC	:= 	gcc
 CFLAGS := -Wall -Werror -Wextra
@@ -64,6 +74,8 @@ RM	:= 	rm -f
 HEADER := ${addprefix $(SRC_PATH), minitalk.h}
 HEADERB := ${addprefix $(SRCB_PATH), minitalk_bonus.h}
 HEADERU := ${addprefix $(SRCU_PATH), minitalk_utils.h}
+HEADERCU := ${addprefix $(SRCCU_PATH), minitalk_cli_utils.h}
+HEADERSU := ${addprefix $(SRCSU_PATH), minitalk_svr_utils.h}
 LIBFT_H := ${addprefix $(LIBFT_PATH), libft.h}
 LIBFT_A := ${addprefix $(LIBFT_PATH), libft.a}
 LIBFT_D := ${addprefix $(LIBFT_PATH), libft.d}
@@ -79,6 +91,12 @@ src_bonus/%.o : src_bonus/%.c ${HEADERB}
 src_utils/%.o : src_utils/%.c ${HEADERU}
 	${CC} ${CFLAGS} ${CFD} -I ${HEADERU} -I ${LIBFT_H} -c $< -o $@
 
+src_cli_utils/%.o : src_cli_utils/%.c ${HEADERCU}
+	${CC} ${CFLAGS} ${CFD} -I ${HEADERCU} -I ${LIBFT_H} -c $< -o $@
+
+src_svr_utils/%.o : src_svr_utils/%.c ${HEADERSU}
+	${CC} ${CFLAGS} ${CFD} -I ${HEADERSU} -I ${LIBFT_H} -c $< -o $@
+
 all : $(NAME)
 
 $(NAME) : $(NAMEC) $(NAMES)
@@ -88,20 +106,24 @@ bonus : $(NAMECB) $(NAMESB)
 	@touch $@
 
 -include $(DEPSC)
-$(NAMEC) : ${LIBFT_A} ${OBJC} ${OBJU}
-	${CC} ${CFLAGS} -I ${HEADER} ${OBJC} ${OBJU} ${LIBFT_A} ${LIBS_FLAGS} -o $@
+$(NAMEC) : ${LIBFT_A} ${OBJC} ${OBJU} ${OBJCU}
+	${CC} ${CFLAGS} -I ${HEADER} -I ${HEADERCU} ${OBJC} ${OBJU} ${OBJCU} \
+	${LIBFT_A} ${LIBS_FLAGS} -o $@
 
 -include $(DEPSS)
-$(NAMES) : ${LIBFT_A} ${OBJS} ${OBJU}
-	${CC} ${CFLAGS} -I ${HEADER} ${OBJS} ${OBJU} ${LIBFT_A} ${LIBS_FLAGS} -o $@
+$(NAMES) : ${LIBFT_A} ${OBJS} ${OBJU} ${OBJSU}
+	${CC} ${CFLAGS} -I ${HEADER} -I ${HEADERSU} ${OBJS} ${OBJU} ${OBJSU} \
+	${LIBFT_A} ${LIBS_FLAGS} -o $@
 
 -include $(DEPSCB)
-$(NAMECB) : ${LIBFT_A} ${OBJCB} ${OBJU}
-	${CC} ${CFLAGS} -I ${HEADERB} ${OBJCB} ${OBJU} ${LIBFT_A} ${LIBS_FLAGS} -o $@
+$(NAMECB) : ${LIBFT_A} ${OBJCB} ${OBJU} ${OBJCU}
+	${CC} ${CFLAGS} -I ${HEADERB} -I ${HEADERCU} ${OBJCB} ${OBJU} ${OBJCU} \
+	${LIBFT_A} ${LIBS_FLAGS} -o $@
 
 -include $(DEPSSB)
-$(NAMESB) : ${LIBFT_A} ${OBJSB} ${OBJU}
-	${CC} ${CFLAGS} -I ${HEADERB} ${OBJSB} ${OBJU} ${LIBFT_A} ${LIBS_FLAGS} -o $@
+$(NAMESB) : ${LIBFT_A} ${OBJSB} ${OBJU} ${OBJSU}
+	${CC} ${CFLAGS} -I ${HEADERB} -I ${HEADERSU} ${OBJSB} ${OBJU} ${OBJSU} \
+	${LIBFT_A} ${LIBS_FLAGS} -o $@
 
 ${LIBFT_A} : ${LIBFT_D_CONT}
 	make bonus -C libft
@@ -112,11 +134,15 @@ clean :
 	$(RM) $(OBJCB)
 	$(RM) $(OBJSB)
 	$(RM) $(OBJU)
+	$(RM) $(OBJCU)
+	$(RM) $(OBJSU)
 	$(RM) $(DEPSC)
 	$(RM) $(DEPSS)
 	$(RM) $(DEPSCB)
 	$(RM) $(DEPSSB)
 	$(RM) $(DEPSU)
+	$(RM) $(DEPSCU)
+	$(RM) $(DEPSSU)
 	make clean -C libft
 
 fclean : clean

@@ -6,11 +6,12 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 15:17:37 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:35:47 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include "../src_svr_utils/minitalk_svr_utils.h"
 
 static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 {

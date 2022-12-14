@@ -6,11 +6,11 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:26:18 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 12:22:41 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:29:46 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_utils.h"
+#include "minitalk_svr_utils.h"
 
 int	ft_content_is_pid(unsigned int i, void *content, void *arg)
 {

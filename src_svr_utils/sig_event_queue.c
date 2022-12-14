@@ -6,11 +6,11 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 10:28:53 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 18:58:46 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 18:51:09 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_utils.h"
+#include "minitalk_svr_utils.h"
 
 static t_sig_event_queue	g_queue;
 
