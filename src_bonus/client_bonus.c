@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 19:45:50 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:36:58 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 #define INTERVAL_US	50
 
+static void	ft_show_kill_error_n_exit(void)
+{
+	char	*errstr;
+
+	ft_log_error("Kill couldn't sent an event\n");
+	errstr = "The target process or process group does not exist\n";
+	ft_putstr_fd(errstr, 2);
+	ft_putchar_fd('\n', 2);
+	exit (-1);
+}
+
 static void	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 {
 	int		ret;
-	char	*errstr;
 	int		pending;
 	int		queue_hi;
 
@@ -28,18 +38,13 @@ static void	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 	pending = ft_get_feedback_pending() + 1;
 	ft_set_feedback_pending(pending);
 	if (ret == -1)
-	{
-		ft_log_error("Kill couldn't sent an event\n");
-		errstr = "The target process or process group does not exist\n";
-		ft_putstr_fd(errstr, 2);
-		ft_putchar_fd('\n', 2);
-	}
+		ft_show_kill_error_n_exit();
 	pending = ft_get_feedback_pending();
-	queue_hi = ft_get_queue_hi();
 	if (pending > 0)
-		usleep(100 * ft_get_feedback_pending());
+		usleep(u * ft_get_feedback_pending());
+	queue_hi = ft_get_queue_hi();
 	while (queue_hi)
-		usleep(10000);
+		usleep(1000);
 	usleep(u);
 }
 
@@ -49,6 +54,10 @@ static void	ft_send_byte_to_pid(int pid, char byte, useconds_t u)
 	int	bit;
 
 	counter = 0;
+	while (ft_get_feedback_pending() > 0)
+		usleep(u);
+	if (ft_get_queue_hi() && counter > 0)
+		counter--;
 	while (! ft_take_bit_from_byte(byte, &bit, &counter))
 		ft_send_bit_to_pid(pid, bit, u);
 	ft_send_bit_to_pid(pid, bit, u);
@@ -58,16 +67,12 @@ static void	ft_sig_handler(int sig)
 {
 	(void)sig;
 	ft_dec_feedback_pending();
+	if (sig == SIGUSR2)
+		ft_putstr_fd("Received queue in danger\n", 1);
 	ft_set_queue_hi(sig == SIGUSR2);
 	ft_putstr_fd("\r", 1);
 	ft_putnbr_fd(ft_get_feedback_pending(), 1);
 	return ;
-}
-
-static void	ft_install_aknowledge(void)
-{
-	signal(SIGUSR1, ft_sig_handler);
-	signal(SIGUSR2, ft_sig_handler);
 }
 
 int	main(int argc, char const *argv[])
@@ -78,7 +83,8 @@ int	main(int argc, char const *argv[])
 	ft_set_feedback_pending(0);
 	ft_get_client_args(argc, argv, &args);
 	ft_show_pid();
-	ft_install_aknowledge();
+	signal(SIGUSR1, ft_sig_handler);
+	signal(SIGUSR2, ft_sig_handler);
 	i = 0;
 	while (args.msg_to_send[i])
 		ft_send_byte_to_pid(args.server_pid, \

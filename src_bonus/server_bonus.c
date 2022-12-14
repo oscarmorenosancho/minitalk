@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 18:50:55 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:25:20 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,30 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 {
 	t_sig_event	se;
 	int			used;
+	int			full;
+	int			ret;
 
 	(void)ptr;
 	se.pid = info->si_pid;
 	se.sig = sig;
-	if (! ft_push_se(se))
-		ft_log_error("Queue is full\n");
-	ft_is_full_se_queue(&used);
-	if (used > QUEUE_SIZE / 2)
-		kill(info->si_pid, SIGUSR2);
+	full = ft_is_full_se_queue(&used);
+	if (used > QUEUE_SIZE / 8)
+	{
+		ft_putstr_fd("Notify queue in danger. Used:", 1);
+		ft_putnbr_fd(used, 1);
+		ft_putstr_fd("\n", 1);
+		ret = kill(info->si_pid, SIGUSR2);
+	}
 	else
-		kill(info->si_pid, SIGUSR1);
+	{
+		ret = kill(info->si_pid, SIGUSR1);
+		if (! ft_push_se(se))
+		{
+			ft_log_error("Queue is full\n");
+		}
+	}
+	if (ret == -1)
+		ft_log_error("Kill failed\n");
 }
 
 int	main(int argc, char const *argv[])

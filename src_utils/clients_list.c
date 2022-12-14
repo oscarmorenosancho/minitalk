@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:26:18 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 13:44:41 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:22:41 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,19 @@ t_list	*ft_create_node_for_pid(t_list	**lst_clients, pid_t pid)
 	return (node);
 }
 
+void	ft_free_node(void *node)
+{
+	t_client_data	*nd;
+
+	if (! node)
+		return ;
+	nd = node;
+	free_x((void **)&nd->msg);
+	free (node);
+}
+
 void	ft_clean_pid(t_list **lst, t_list *node, char byte)
 {
 	if (! byte)
-		ft_lstdeletewhere(lst, &ft_node_is_pid, &free, (void *)node);
+		ft_lstdeletewhere(lst, &ft_node_is_pid, &ft_free_node, (void *)node);
 }

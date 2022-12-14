@@ -6,13 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 19:35:45 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:27:55 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_UTILS_H
 # define MINITALK_UTILS_H
-# define QUEUE_SIZE	800
+# define QUEUE_SIZE	1600
 
 # include "../libft/libft.h"
 
@@ -45,11 +45,10 @@ typedef struct s_sig_event_queue
 	t_sig_event	ar[QUEUE_SIZE];
 }	t_sig_event_queue;
 
-
 typedef struct s_feedback
 {
-	int	pending;
-	int	queue_hi;
+	size_t	pending;
+	int		queue_hi;
 }	t_feedback;
 
 void	ft_check_server_args(int argc, char const *argv[]);
@@ -61,15 +60,16 @@ void	ft_init_se_queue(void);
 int		ft_is_full_se_queue(int *used);
 int		ft_is_empty_se_queue(void);
 void	ft_init_se_queue(void);
-int		ft_get_feedback_pending(void);
+size_t	ft_get_feedback_pending(void);
 int		ft_get_queue_hi(void);
-void	ft_set_feedback_pending(int val);
+void	ft_set_feedback_pending(size_t val);
 void	ft_dec_feedback_pending(void);
 void	ft_set_queue_hi(int value);
 int		ft_push_se(t_sig_event se);
 int		ft_pop_se(t_sig_event *se);
 int		ft_content_is_pid(unsigned int i, void *content, void *arg);
 t_list	*ft_create_node_for_pid(t_list	**lst_clients, pid_t pid);
+void	ft_free_node(void *node);
 void	ft_clean_pid(t_list **lst, t_list *node, char byte);
 void	ft_process_sig_ev(void);
 

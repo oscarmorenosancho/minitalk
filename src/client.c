@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 16:49:49 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:33:40 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 		errstr = "The target process or process group does not exist\n";
 		ft_putstr_fd(errstr, 2);
 		ft_putchar_fd('\n', 2);
+		exit (-1);
 	}
 	usleep(u);
 }
