@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 16:01:02 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:05:42 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 
 static void	ft_check_sigaction_ret(int *ret)
 {
-	if (ret[0] == -1 || ret[1] == -1) 
+	if (ret[0] == -1 || ret[1] == -1)
 	{
 		ft_log_error("sigaction failed\n");
 		exit (-1);

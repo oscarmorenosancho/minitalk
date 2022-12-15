@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/15 14:12:59 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/15 17:40:10 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,19 @@ NAMES := server
 NAMECB := ${addsuffix _bonus, $(NAMEC)}
 NAMESB := ${addsuffix _bonus, $(NAMES)}
 
-SRCC_R:= client.c
+SRCC_R:= client.c\
+	send_to_server.c
 SRCS_R := server.c
 
-SRCCB_R:= client_bonus.c
+SRCCB_R:= client_bonus.c\
+	send_to_server_bonus.c
 SRCSB_R := server_bonus.c
 
 SRCU_R :=check_args.c\
 	ft_show_pid.c\
 	ft_append_bit_to_byte.c\
-	ft_take_bit_from_byte.c
+	ft_take_bit_from_byte.c\
+	ft_crc.c
 
 SRCSU_R := ft_process_sig_ev.c\
 	sig_event_queue.c\

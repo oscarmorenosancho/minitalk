@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 15:34:41 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:25:27 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ typedef struct s_client_data
 {
 	pid_t	pid;
 	int		count;
+	size_t	len;
 	char	byte;
-	int		exitcount;
 	char	*msg;
+	char	crc;
 }	t_client_data;
 
 typedef struct s_sig_event
