@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 10:33:21 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 18:29:34 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:34:41 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_sig_event_queue
 {
 	int			head;
 	int			tail;
-	int			mutex;
+	int			head_mutex;
+	int			tail_mutex;
 	t_sig_event	ar[QUEUE_SIZE];
 }	t_sig_event_queue;
 
@@ -55,6 +56,6 @@ int		ft_content_is_pid(unsigned int i, void *content, void *arg);
 t_list	*ft_create_node_for_pid(t_list	**lst_clients, pid_t pid);
 void	ft_free_node(void *node);
 void	ft_clean_pid(t_list **lst, t_list *node, char byte);
-void	ft_process_sig_ev(void);
+void	ft_process_sig_ev(int reset);
 
 #endif

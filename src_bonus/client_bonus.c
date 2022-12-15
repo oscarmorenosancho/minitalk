@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 18:34:48 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:12:06 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,17 @@
 
 #define INTERVAL_US	50
 
-static void	ft_show_kill_error_n_exit(void)
+static void	ft_show_refused_n_exit(void)
 {
-	char	*errstr;
-
-	ft_log_error("Kill couldn't sent an event\n");
-	errstr = "The target process or process group does not exist\n";
-	ft_putstr_fd(errstr, 2);
-	ft_putchar_fd('\n', 2);
+	ft_log_error("Server refused the communication because its too busy\n");
 	exit (-1);
 }
 
 static int	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 {
-	int		ret;
-	int		pending;
+	int	ret;
+	int	pending;
+	int	i;
 
 	pending = ft_get_feedback_pending();
 	ft_set_feedback_pending(pending + 1);
@@ -39,8 +35,17 @@ static int	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 		ret = kill(pid, SIGUSR1);
 	if (ret == -1)
 		ft_show_kill_error_n_exit();
+	i = 0;
 	while (ft_get_feedback_pending() > 0)
-		usleep(u);
+	{
+		if (i > 3)
+		{
+			ft_log_error("Timeout waiting for ACK\n");
+			exit (1);
+		}
+		i++;
+		usleep(u * i);
+	}
 	usleep(u);
 	return (ft_get_queue_hi());
 }
@@ -49,26 +54,15 @@ static void	ft_send_byte_to_pid(int pid, char byte, useconds_t u)
 {
 	int	counter;
 	int	bit;
-	int	retry;
 
 	counter = 0;
-	retry = 0;
 	while (! ft_take_bit_from_byte(byte, &bit, &counter))
 	{
-		while (ft_send_bit_to_pid(pid, bit, u))
-		{
-			ft_putstr_fd("\r", 1);
-			ft_putnbr_fd(++retry, 1);
-			usleep(100 * u);
-		}
-		retry = 0;
+		if (ft_send_bit_to_pid(pid, bit, u))
+			ft_show_refused_n_exit();
 	}
-	while (ft_send_bit_to_pid(pid, bit, u))
-	{
-		ft_putstr_fd("\r", 1);
-		ft_putnbr_fd(++retry, 1);
-		usleep(100 * u);
-	}
+	if (ft_send_bit_to_pid(pid, bit, u))
+		ft_show_refused_n_exit();
 }
 
 static void	ft_sig_handler(int sig)
@@ -76,7 +70,7 @@ static void	ft_sig_handler(int sig)
 	(void)sig;
 	ft_dec_feedback_pending();
 	if (sig == SIGUSR2)
-		ft_putstr_fd("Received queue in danger\n", 1);
+		ft_putstr_fd("Received server too busy\n", 1);
 	ft_set_queue_hi(sig == SIGUSR2);
 	return ;
 }

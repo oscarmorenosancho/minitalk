@@ -6,24 +6,13 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 18:36:07 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:11:35 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include "../src_cli_utils/minitalk_cli_utils.h"
 #define INTERVAL_US	50
-
-static void	ft_show_kill_error_n_exit(void)
-{
-	char	*errstr;
-
-	ft_log_error("Kill couldn't sent an event\n");
-	errstr = "The target process or process group does not exist\n";
-	ft_putstr_fd(errstr, 2);
-	ft_putchar_fd('\n', 2);
-	exit (-1);
-}
 
 static void	ft_send_bit_to_pid(int pid, int bit, useconds_t u)
 {

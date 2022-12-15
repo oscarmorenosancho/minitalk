@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/21 10:34:11 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/14 19:47:02 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/15 14:12:59 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCSU_R := ft_process_sig_ev.c\
 	sig_event_queue.c\
 	clients_list.c
  
-SRCCU_R := flow_control.c
+SRCCU_R := flow_control.c\
+	ft_show_kill_error_n_exit.c
 
 SRC_PATH := src/
 SRCB_PATH := src_bonus/

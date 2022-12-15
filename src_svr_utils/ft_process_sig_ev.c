@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:33:51 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/14 18:53:19 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:41:19 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,32 @@ static void	ft_update_received(t_client_data *client_data)
 {
 	char	*buf;
 
-	if (client_data->byte)
+	if (client_data && client_data->pid > 0)
 	{
-		buf = ft_str_join_char(&client_data->msg, client_data->byte);
-		client_data->msg = buf;
-	}
-	else
-	{
-		ft_putstr_fd("\nMessage sent by client pid: ", 1);
-		ft_putnbr_fd(client_data->pid, 1);
-		ft_putstr_fd("\n", 1);
-		ft_putstr_fd(client_data->msg, 1);
+		if (client_data->byte)
+		{
+			buf = ft_str_join_char(&client_data->msg, client_data->byte);
+			client_data->msg = buf;
+		}
+		else
+		{
+			ft_putstr_fd("\nMessage sent by client pid: ", 1);
+			ft_putnbr_fd(client_data->pid, 1);
+			ft_putstr_fd("\n", 1);
+			if (client_data->msg)
+				ft_putstr_fd(client_data->msg, 1);
+		}
 	}
 }
 
-void	ft_process_sig_ev(void)
+static void	ft_exit_server(t_list *lst_clients)
+{
+	ft_lstclear(&lst_clients, &ft_free_node);
+	ft_putstr_fd("\nReceived close command\nServer exiting\n", 1);
+	exit (0);
+}
+
+void	ft_process_sig_ev(int reset)
 {
 	static t_list	*lst_clients;
 	t_list			*client_node;
@@ -50,6 +61,8 @@ void	ft_process_sig_ev(void)
 	t_sig_event		se;
 	int				res;
 
+	if (reset)
+		ft_lstclear(&lst_clients, &ft_free_node);
 	if (ft_is_empty_se_queue() || ! ft_pop_se(&se))
 		return ;
 	client_node = ft_lstfindfirst(lst_clients, &ft_content_is_pid, &se.pid);
@@ -63,10 +76,6 @@ void	ft_process_sig_ev(void)
 		ft_update_received(client_data);
 		ft_clean_pid(&lst_clients, client_node, client_data->byte);
 		if (ft_update_exit_state(client_data))
-		{
-			ft_lstclear(&lst_clients, &ft_free_node);
-			ft_putstr_fd("Received close command\nServer exiting\n", 1);
-			exit (0);
-		}
+			ft_exit_server(lst_clients);
 	}
 }
