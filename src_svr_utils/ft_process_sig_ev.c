@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 11:33:51 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 18:26:05 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:32:58 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_update_exit_state(t_client_data	*client_data)
 
 	if (client_data->byte == '\0' && client_data->msg)
 	{
-		len = ft_strlen_x(client_data->msg);
+		len = client_data->len;
 		if (len >= 2)
 		{
 			return (client_data->msg[len - 2] == '\\' && \
