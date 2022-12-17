@@ -6,11 +6,12 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/13 15:17:37 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:05:03 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include "../src_svr_utils/minitalk_svr_utils.h"
 
 static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 {
@@ -23,6 +24,24 @@ static void	ft_sig_handler(int sig, siginfo_t *info, void *ptr)
 		ft_log_error("Queue is full\n");
 }
 
+static void	ft_check_sigaction_ret(int *ret)
+{
+	if (ret[0] == -1 || ret[1] == -1)
+	{
+		ft_log_error("sigaction failed\n");
+		exit (-1);
+	}
+}
+
+static void	ft_process_n_events(int n)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < n)
+		ft_process_sig_ev(0);
+}
+
 int	main(int argc, char const *argv[])
 {
 	struct sigaction	nsa;
@@ -32,8 +51,6 @@ int	main(int argc, char const *argv[])
 
 	ft_init_se_queue();
 	sigemptyset(&set);
-	sigaddset(&set, SIGUSR1);
-	sigaddset(&set, SIGUSR2);
 	nsa.sa_flags = SA_SIGINFO;
 	nsa.sa_mask = set;
 	nsa.sa_sigaction = ft_sig_handler;
@@ -41,11 +58,11 @@ int	main(int argc, char const *argv[])
 	ft_show_pid();
 	ret[0] = sigaction(SIGUSR1, &nsa, &osa[0]);
 	ret[1] = sigaction(SIGUSR2, &nsa, &osa[1]);
+	ft_check_sigaction_ret(ret);
 	ft_putstr_fd("Waiting for message from client...\n", 1);
 	while (1)
 	{
-		ft_process_sig_ev();
-		ft_process_sig_ev();
 		pause();
+		ft_process_n_events(2);
 	}
 }

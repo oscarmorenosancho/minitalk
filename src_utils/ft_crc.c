@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_update_crc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 11:49:06 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 17:10:49 by omoreno-         ###   ########.fr       */
+/*   Created: 2022/12/15 16:58:02 by omoreno-          #+#    #+#             */
+/*   Updated: 2022/12/15 17:03:39 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include "../libft/libft.h"
-# include "../src_utils/minitalk_utils.h"
+#include "minitalk_utils.h"
 
-void	ft_send_byte_to_pid(int pid, char byte, useconds_t u);
-void	ft_send_n_crc_to_pid(char *crc, int pid, char byte, useconds_t u);
-
-#endif
+void	ft_crc(char *crc, char byte)
+{
+	*crc ^= byte;
+}

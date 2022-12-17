@@ -6,7 +6,7 @@
 #    By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/04 11:10:43 by omoreno-          #+#    #+#              #
-#    Updated: 2022/12/10 12:02:50 by omoreno-         ###   ########.fr        #
+#    Updated: 2022/12/14 11:58:22 by omoreno-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,8 @@ SRCX := ft_copy_pos.c\
 	ft_lstdeletenode.c\
 	ft_lstfindfirst.c\
 	ft_strreduce.c\
-	ft_str_merge.c
+	ft_str_merge.c\
+	ft_str_join_char.c
 
 LIBFT_PATH := libft/
 SRC_PATH := src/
