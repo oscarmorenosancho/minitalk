@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:46:04 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 17:36:39 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:17:43 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	main(int argc, char const *argv[])
 	while (args.msg_to_send[i])
 		ft_send_n_crc_to_pid(&crc, args.server_pid, \
 			args.msg_to_send[i++], INTERVAL_US);
+	if (crc == 0)
+		crc = 1;
+	ft_send_byte_to_pid(args.server_pid, crc, INTERVAL_US);
 	ft_send_byte_to_pid(args.server_pid, 0, INTERVAL_US);
 	free_x((void **)&args.msg_to_send);
 	return (0);

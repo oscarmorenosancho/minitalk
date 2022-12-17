@@ -6,7 +6,7 @@
 /*   By: omoreno- <omoreno-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 11:45:56 by omoreno-          #+#    #+#             */
-/*   Updated: 2022/12/15 17:05:42 by omoreno-         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:04:07 by omoreno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char const *argv[])
 	ft_putstr_fd("Waiting for message from client...\n", 1);
 	while (1)
 	{
-		ft_process_n_events(2);
 		pause();
+		ft_process_n_events(2);
 	}
 }
